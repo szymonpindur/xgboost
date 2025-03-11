@@ -2007,6 +2007,10 @@ class Booster:
         feature_idx_mapping = {
             name: idx for idx, name in enumerate(self.feature_names or [])
         }
+        # If value contains integers, return as-is
+        if all(isinstance(constraint, (list, tuple)) and 
+               all(isinstance(item, int) for item in constraint) for constraint in value):
+            return value  # Already a list of integer indices, no transformation needed
 
         try:
             result = []
